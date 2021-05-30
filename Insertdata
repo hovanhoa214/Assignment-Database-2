@@ -108,6 +108,4 @@ call insertVeThang (4000, '1998-01-23 12:45:56', 'KH000001',
 		'B001', 'BT00001', 'BT00002');
 call insertVeThang (5000, '1998-01-23 12:45:56', 'KH000001', 
 		'B001', 'BT00001', 'BT00002');
-select * from Ve;
-select * from Ve_thang;
-select * from hoat_dong_ve_thang;
+
