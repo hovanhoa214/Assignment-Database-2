@@ -41,7 +41,7 @@ BEGIN
 			SELECT stt_ INTO sochuyen1 FROM ghe, ve WHERE(ghe.Ma_tuyen = matuyen AND ghe.Ma_ga_tram = new.Ma_ga_tram_len AND new.Ma_ve = ve.Ma_ve);
             SELECT stt_ INTO sochuyen2 FROM ghe, ve WHERE(ghe.Ma_tuyen = matuyen AND ghe.Ma_ga_tram = new.Ma_ga_tram_xuong AND new.Ma_ve = ve.Ma_ve);
 				if(matuyen like 'B%') then SELECT don_gia_xe_bus INTO gia FROM Bang_gia;
-				else SELECT don_gia INTO gia FROM Tuyen_tau_dien WHERE(Ma_tuyen = matuyen);
+				else SELECT don_gia INTO gia FROM Tuyen_tau_dien WHERE(Ma_tuyen_tau_xe = matuyen);
 				end if;
             SET sochuyen1 = ABS(sochuyen1 - sochuyen2);
             SET gia = gia * CEIL(sochuyen1/2);
@@ -92,14 +92,15 @@ BEGIN
 			SELECT stt_ INTO sochuyen1 FROM ghe, ve WHERE(ghe.Ma_tuyen = matuyen AND ghe.Ma_ga_tram = magatram1 AND ve.Ma_ve = new.Ma_ve);
             SELECT stt_ INTO sochuyen2 FROM ghe, ve WHERE(ghe.Ma_tuyen = matuyen AND ghe.Ma_ga_tram = magatram2 AND ve.Ma_ve = new.Ma_ve);
 				if(matuyen like 'B%') then SELECT don_gia_xe_bus INTO gia FROM Bang_gia;
-				else SELECT don_gia INTO gia FROM Tuyen_tau_dien WHERE(Ma_tuyen = matuyen);
+				else SELECT don_gia INTO gia FROM Tuyen_tau_dien WHERE(Ma_tuyen_tau_xe = matuyen);
 				end if;
             SET sochuyen1 = ABS(sochuyen1 - sochuyen2);
-            SELECT COUNT(*) INTO num FROM Ve_thang WHERE(Ve_thang.Ma_ve = new.Ma_ve AND Ve_thang.Ma_tuyen = new.Ma_tuyen AND Ve_thang.Ma_ga_tram_1 = magatram1 AND Ve_thang.Ma_ga_tram_2 = magatram2); 
+            SELECT COUNT(*) INTO num FROM Ve_thang, Khach_hang, ve WHERE(Khach_hang.Ma_khach_hang = ve.Ma_khach_hang AND Ve_thang.Ma_tuyen = new.Ma_tuyen AND Ve_thang.Ma_ga_tram_1 = magatram1 AND Ve_thang.Ma_ga_tram_2 = magatram2 and ve.ma_ve = ve_thang.ma_ve
+				and (DATE_ADD(ve.ngay_gio_mua, INTERVAL 30 day) >= Ve.ngay_gio_mua) ); 
 				if(num > 0) then SET giamgia = giamgia - 0.1;
 				end if;
             SELECT Nghe_nghiep INTO nghenghiep FROM Khach_hang, ve WHERE(Khach_hang.Ma_khach_hang = ve.Ma_khach_hang and ve.ma_ve = new.ma_ve);
-				if(nghenghiep = 'HS') then SET giamgia = giamgia - 0.5;
+				if(nghenghiep = 'Student') then SET giamgia = giamgia - 0.5;
 				end if;
             SET gia = 20 * 2 * giamgia * gia * CEIL(sochuyen1/2);
         end;
