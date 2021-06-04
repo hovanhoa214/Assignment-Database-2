@@ -1,4 +1,3 @@
-
 /* Cau 1 */
 drop procedure if exists LoTrinhTuyenXeTau;
 DELIMITER $$
@@ -10,7 +9,7 @@ BEGIN
 
 END$$
 DELIMITER ;
-call LoTrinhTuyenXeTau('B001');
+
 
 
 /* Cau 2 */
@@ -30,11 +29,10 @@ BEGIN
 		IF  DATE_ADD(tu_ngay , INTERVAL countday day) >  toi_ngay THEN 
 			LEAVE  loop_label;
 		ELSE 
-			
 			Insert into thong_ke values (DATE_ADD(tu_ngay , INTERVAL countday day), 
-            (select count(*) from ve_le where Ngay_su_dung = (DATE_ADD(tu_ngay , INTERVAL countday day))) + 
-            (select count(*) from Hoat_dong_ve_thang where Ngay_su_dung = (DATE_ADD(tu_ngay , INTERVAL countday day))) + 
-            (select count(*) from Ve_1_ngay where Ngay_su_dung = (DATE_ADD(tu_ngay , INTERVAL countday day))) 
+            (select count(*) from ve_le where Ngay_su_dung = (DATE_ADD(tu_ngay , INTERVAL countday day)) and ma = ve_le.ma_tuyen) + 
+            (select count(*) from Hoat_dong_ve_thang, ve_thang where Ngay_su_dung = (DATE_ADD(tu_ngay , INTERVAL countday day)) and ma = ve_thang.ma_tuyen and ve_thang.ma_ve = Hoat_dong_ve_thang.ma_ve) + 
+            (select count(*) from Ve_1_ngay, hoat_dong_ve_1_ngay where Ngay_su_dung = (DATE_ADD(tu_ngay , INTERVAL countday day)) and Ve_1_ngay.ma_ve = hoat_dong_ve_1_ngay.ma_ve and hoat_dong_ve_1_ngay.ma_tuyen = ma) 
             );
             set countday = countday + 1;
 		END  IF; 
@@ -45,11 +43,6 @@ BEGIN
 END$$
 DELIMITER ;
 
-select * from ve_le;
-select * from Ve_1_ngay;
-select * from Hoat_dong_ve_thang;
-call ThongKeLuotNguoi('B001', "2021-05-20", '2021-05-30');
-select * from thong_ke;
 
 
 
