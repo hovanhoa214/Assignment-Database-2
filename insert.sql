@@ -1,13 +1,13 @@
-insert into Giao_Lo values (null,'1', '40°24\'12,2\"N 2°10\'26,5\"E');
-insert into Giao_Lo values (null,'2', '42°24\'12,2\"N 2°10\'26,5\"E');
-insert into Giao_Lo values (null,'3', '43°24\'12,2\"N 2°10\'26,5\"E');
-insert into Giao_Lo values (null,'4', '45°24\'12,2\"N 2°10\'26,5\"E');
-insert into Giao_Lo values (null,'5', '40°24\'12,2\"N 2°10\'26,5\"E');
-insert into Giao_Lo values (null,'6', '42°24\'12,2\"N 2°10\'26,5\"E');
-insert into Giao_Lo values (null,'7', '43°24\'12,2\"N 2°10\'26,5\"E');
-insert into Giao_Lo values (null,'8', '46°24\'12,2\"N 2°10\'26,5\"E');
-insert into Giao_Lo values (null,'9', '45°24\'12,2\"N 2°10\'26,5\"E');
-insert into Giao_Lo values (null,'10', '46°24\'12,2\"N 2°10\'26,5\"E');
+insert into Giao_Lo values (null,'40°24\'12,2\"N', '21°10\'26,5\"E');
+insert into Giao_Lo values (null,'41°24\'12,2\"N', '22°10\'26,5\"E');
+insert into Giao_Lo values (null,'42°24\'12,2\"N', '23°10\'26,5\"E');
+insert into Giao_Lo values (null,'43°24\'12,2\"N', '24°10\'26,5\"E');
+insert into Giao_Lo values (null,'44°24\'12,2\"N', '25°10\'26,5\"E');
+insert into Giao_Lo values (null,'45°24\'12,2\"N', '26°10\'26,5\"E');
+insert into Giao_Lo values (null,'46°24\'12,2\"N', '27°10\'26,5\"E');
+insert into Giao_Lo values (null,'47°24\'12,2\"N', '28°10\'26,5\"E');
+insert into Giao_Lo values (null,'48°24\'12,2\"N', '29°10\'26,5\"E');
+insert into Giao_Lo values (null,'49°24\'12,2\"N', '30°10\'26,5\"E');
 select * from Giao_Lo;
 
 
@@ -135,20 +135,15 @@ Insert into Ve values ('VO1805202100001', 0, 3000, '2021-05-25 00:00:00', 'KH000
 Insert into Ve values ('VO1805202100002', 0, 3000, '2021-05-25 08:00:00', 'KH000002');
 Insert into Ve values ('VO1805202100003', 0, 3000, '2021-05-25 09:00:00', 'KH000003');
 Insert into Ve values ('VO1805202100004', 0, 3000, '2021-05-25 06:00:00', 'KH000004');
-
 Insert into Ve values ('VM1805202100001', 0, 13000, '2021-05-25 00:00:00', 'KH000001');
 Insert into Ve values ('VM1805202100002', 0, 13000, '2021-05-25 08:00:00', 'KH000002');
 Insert into Ve values ('VM1805202100003', 0, 13000, '2021-05-25 09:00:00', 'KH000003');
 Insert into Ve values ('VM1805202100004', 0, 13000, '2021-05-25 06:00:00', 'KH000004');
-
 Insert into Ve values ('VD1805202100001', 0, 113000, '2021-05-25 00:00:00', 'KH000001');
 Insert into Ve values ('VD1805202100002', 0, 113000, '2021-05-25 08:00:00', 'KH000002');
 Insert into Ve values ('VD1805202100003', 0, 113000, '2021-05-25 09:00:00', 'KH000003');
 Insert into Ve values ('VD1805202100004', 0, 113000, '2021-05-25 06:00:00', 'KH000004');
 select * from Ve;
-
-
-
 insert into Ve_le values ('VO1805202100001', 'B001', '2021-05-21', 'BT00001', '01:00:00','BT00002', '02:01:01');
 insert into Ve_le values ('VO1805202100002', 'B002', '28-05-2021', 'BT00002', '01:00:00','BT00004', '03:01:01');
 insert into Ve_le values ('VO1805202100003', 'B003', '28-05-2021', 'BT00004', '01:00:00','BT00001', '02:01:01');
@@ -197,24 +192,24 @@ call insertVe1Ngay(5000,'2021-01-21 12:45:56','KH000004','2021-02-28');
 select * from Ve_1_ngay;
 
 insert into hoat_dong_ve_thang 
-values 	('VM0306202100001','2021-05-23','14:00:00','15:01:01','BT00001', 'BT00003');
+values 	('VM0406202100001','2021-05-23','14:00:00','15:01:01','BT00001', 'BT00003');
 insert into hoat_dong_ve_thang 
-values	('VM0306202100002','2021-04-23','08:00:00','09:01:01','TT00004', 'TT00005');
+values	('VM0406202100002','2021-04-23','08:00:00','09:01:01','TT00004', 'TT00005');
 insert into hoat_dong_ve_thang 
-values	('VM0306202100003','2021-05-20','11:00:00','13:01:01','BT00005', 'BT00010');
+values	('VM0406202100003','2021-05-20','11:00:00','13:01:01','BT00005', 'BT00010');
 insert into hoat_dong_ve_thang 
-values	('VM0306202100004','2021-04-20','14:00:00','15:01:01','BT00001', 'BT00003');
+values	('VM0406202100004','2021-04-20','14:00:00','15:01:01','BT00001', 'BT00003');
 insert into hoat_dong_ve_thang 
-values	('VM0306202100005','2021-01-23','14:00:00','15:01:01','TT00002', 'TT00006');
+values	('VM0406202100005','2021-01-23','14:00:00','15:01:01','TT00002', 'TT00006');
 
 insert into Hoat_dong_ve_1_ngay
-values 	('VD0306202100001',1,'T003','TT00002', 'TT00006','14:00:00','15:01:01');
+values 	('VD0406202100001',1,'T003','TT00002', 'TT00006','14:00:00','15:01:01');
 insert into Hoat_dong_ve_1_ngay
-values 	('VD0306202100002',2,'B001','BT00001', 'BT00003','14:00:00','15:01:01');
+values 	('VD0406202100002',2,'B001','BT00001', 'BT00003','14:00:00','15:01:01');
 insert into Hoat_dong_ve_1_ngay
-values 	('VD0306202100003',3,'T001','TT00004', 'TT00005','08:00:00','09:01:01');
+values 	('VD0406202100003',3,'T001','TT00004', 'TT00005','08:00:00','09:01:01');
 insert into Hoat_dong_ve_1_ngay
-values 	('VD0306202100004',4,'B004','BT00005', 'BT00010','11:00:00','13:01:01');
+values 	('VD0406202100004',4,'B004','BT00005', 'BT00010','11:00:00','13:01:01');
 
 select * from Ve;
 select * from hoat_dong_ve_thang;
