@@ -30,14 +30,12 @@ FOR EACH ROW
 BEGIN
 	declare sochuyen1 int;
     declare sochuyen2 int;
-    declare matuyen char(4);
     declare gia int;
 		begin
-			set matuyen = new.Ma_tuyen;
-			SELECT stt_ INTO sochuyen1 FROM ghe, ve WHERE(ghe.Ma_tuyen = matuyen AND ghe.Ma_ga_tram = new.Ma_ga_tram_len AND new.Ma_ve = ve.Ma_ve);
-            SELECT stt_ INTO sochuyen2 FROM ghe, ve WHERE(ghe.Ma_tuyen = matuyen AND ghe.Ma_ga_tram = new.Ma_ga_tram_xuong AND new.Ma_ve = ve.Ma_ve);
-				if(matuyen like 'B%') then SELECT don_gia_xe_bus INTO gia FROM Bang_gia;
-				else SELECT don_gia INTO gia FROM Tuyen_tau_dien WHERE(Ma_tuyen_tau_xe = matuyen);
+			SELECT stt_ INTO sochuyen1 FROM ghe, ve WHERE(ghe.Ma_tuyen = new.Ma_tuyen AND new.Ma_ve = ve.Ma_ve AND ghe.Ma_ga_tram = new.Ma_ga_tram_len);
+            SELECT stt_ INTO sochuyen2 FROM ghe, ve WHERE(ghe.Ma_tuyen = new.Ma_tuyen AND new.Ma_ve = ve.Ma_ve AND ghe.Ma_ga_tram = new.Ma_ga_tram_xuong);
+				if(new.Ma_tuyen like 'B%') then SELECT don_gia_xe_bus INTO gia FROM Bang_gia;
+				else SELECT don_gia INTO gia FROM Tuyen_tau_dien WHERE(Ma_tuyen_tau_xe = new.Ma_tuyen);
 				end if;
             SET gia = gia * CEIL(ABS(sochuyen1 - sochuyen2)/2);
         end;
@@ -50,11 +48,9 @@ DELIMITER $$
 CREATE TRIGGER Auto_Insert_gia_ve_1_ngay  Before INSERT ON Ve_1_ngay
 FOR EACH ROW
 BEGIN
-	declare NgaySuDung DATE;
     declare gia int;
 		begin
-			set NgaySuDung = new.Ngay_su_dung;
-            if(WEEKDAY(NgaySuDung)<=4)	
+            if(WEEKDAY(new.Ngay_su_dung) < 5)	
 				then SELECT gia_ve_1_ngay_trong_tuan into gia from Bang_gia;
 			else
 				SELECT gia_ve_1_ngay_cuoi_tuan into gia from Bang_gia;
@@ -72,24 +68,18 @@ FOR EACH ROW
 BEGIN
 	declare sochuyen1 int;
     declare sochuyen2 int;
-	declare matuyen char(4);
 	declare giamgia float(2) default 1.00;
-    declare nghenghiep text;
+    declare nghenghiep varchar(30);
     declare num int default 0;
-    declare magatram1 char(7);
-    declare magatram2 char(7);
 	declare NgaySuDung DATE;
     declare gia int;
 		begin
-			set matuyen = new.ma_tuyen;
-            set magatram1 = new.Ma_ga_tram_1;
-            set magatram2 = new.Ma_ga_tram_2;
-			SELECT stt_ INTO sochuyen1 FROM ghe, ve WHERE(ghe.Ma_tuyen = matuyen AND ghe.Ma_ga_tram = magatram1 AND ve.Ma_ve = new.Ma_ve);
-            SELECT stt_ INTO sochuyen2 FROM ghe, ve WHERE(ghe.Ma_tuyen = matuyen AND ghe.Ma_ga_tram = magatram2 AND ve.Ma_ve = new.Ma_ve);
-				if(matuyen like 'B%') then SELECT don_gia_xe_bus INTO gia FROM Bang_gia;
-				else SELECT don_gia INTO gia FROM Tuyen_tau_dien WHERE(Ma_tuyen_tau_xe = matuyen);
+			SELECT stt_ INTO sochuyen1 FROM ghe, ve WHERE(ghe.Ma_tuyen = new.ma_tuyen AND ghe.Ma_ga_tram = new.Ma_ga_tram_1 AND ve.Ma_ve = new.Ma_ve);
+            SELECT stt_ INTO sochuyen2 FROM ghe, ve WHERE(ghe.Ma_tuyen = new.ma_tuyen AND ghe.Ma_ga_tram = new.Ma_ga_tram_2 AND ve.Ma_ve = new.Ma_ve);
+				if(new.ma_tuyen like 'B%') then SELECT don_gia_xe_bus INTO gia FROM Bang_gia;
+				else SELECT don_gia INTO gia FROM Tuyen_tau_dien WHERE(Ma_tuyen_tau_xe = new.ma_tuyen);
 				end if;
-            SELECT COUNT(*) INTO num FROM Ve_thang, Khach_hang, ve WHERE(Khach_hang.Ma_khach_hang = ve.Ma_khach_hang AND Ve_thang.Ma_tuyen = new.Ma_tuyen AND Ve_thang.Ma_ga_tram_1 = magatram1 AND Ve_thang.Ma_ga_tram_2 = magatram2 and ve.ma_ve = ve_thang.ma_ve
+            SELECT COUNT(*) INTO num FROM Ve_thang, Khach_hang, ve WHERE(Khach_hang.Ma_khach_hang = ve.Ma_khach_hang AND Ve_thang.Ma_tuyen = new.Ma_tuyen AND Ve_thang.Ma_ga_tram_1 = new.Ma_ga_tram_1 AND Ve_thang.Ma_ga_tram_2 = new.Ma_ga_tram_2 and ve.ma_ve = ve_thang.ma_ve
 				and (DATE_ADD(ve.ngay_gio_mua, INTERVAL 30 day) >= Ve.ngay_gio_mua) ); 
 				if(num > 0) then SET giamgia = giamgia - 0.1;
 				end if;
